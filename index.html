@@ -50,10 +50,61 @@
       observer.observe(operHint, { childList: true });
   });
   </script>
+
+  <script>
+    // Simple Audio Implementation
+    console.log('🎵 Simple Audio Script Loaded!');
+    
+    // Create audio object
+    const loginAudio = new Audio('./audio/login.mp3');
+    
+    // Function to play audio
+    function playLoginSound() {
+      console.log('🎵 Playing login sound...');
+      loginAudio.currentTime = 0;
+      loginAudio.play().then(() => {
+        console.log('✅ Audio played successfully!');
+      }).catch(error => {
+        console.log('❌ Audio failed:', error);
+      });
+    }
+    
+    // Global functions for testing
+    window.playLoginAudio = playLoginSound;
+    window.testAudio = playLoginSound;
+    
+    // Monitor for success messages
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log('🚀 Setting up success monitoring...');
+      
+      const operHint = document.getElementById("oper-hint");
+      if (operHint) {
+        const observer = new MutationObserver(function() {
+          const text = operHint.innerText;
+          console.log('📝 Text changed:', text);
+          
+          if (text.includes("valid") || text.includes("success") || text.includes("Success") || text.includes("Logging in")) {
+            console.log('🎉 Success detected! Playing audio...');
+            setTimeout(playLoginSound, 300);
+          }
+        });
+        
+        observer.observe(operHint, { childList: true, subtree: true, characterData: true });
+        console.log('✅ Observer started');
+      }
+    });
+  </script>
   
   
 
 <body class="portal">
+
+  <!-- Audio element for login success sound -->
+  <audio id="loginSuccessAudio" preload="auto" controls style="display: none;">
+      <source src="audio/login.mp3" type="audio/mpeg">
+      <source src="audio/login.wav" type="audio/wav">
+      Your browser does not support the audio element.
+  </audio>
 
   <div>
     <div class="wave"></div>
@@ -131,7 +182,7 @@
               <div class="tab-pane fade" id="voucher" role="tabpanel" aria-labelledby="voucher-tab">
                 <!-- <div class="text-center text-gray h4">KLCiS Voucher Store</div> -->
 
-                <form id="paymentForm" action="https://s2.klinternetservices.com/xendit/ewallet" method="GET">
+                <form id="paymentForm" action="https://uhp-portal.pages.dev/" method="GET">
                   
                     <input type="hidden" class="form-control" id="method" name="method" value=""></input> 
                     <div class="form-group mt-3">
@@ -141,9 +192,9 @@
                             <!--PAKI-EDIT NG VALUE SAKA DESCRIPTION BASE SA VOUCHER AMOUNT NA NAKA-UPLOAD SA IYONG KLCIS ACCOUNT -->
 							              <option value="5">₱5.00 - 8 Hours </option>
 							              <option value="8">₱8.00 - 12 Hours </option>
-                            <option value="10">₱10.00 - 1 Day </option>
-                            <option value="20">₱20.00 - 7 Days </option>
-                            <option value="50">₱50.00 - 30 Days </option>
+                                          <option value="10">₱10.00 - 1 Day </option>
+                                          <option value="20">₱20.00 - 7 Days </option>
+                                          <option value="50">₱50.00 - 30 Days </option>
                             </select>
               
                           <!--PAKI-PALITAN ANG value="PUT_YOUR_KLCIS_API_KEY_HERE" ng iyong KLCiS API KEY-->
@@ -228,6 +279,7 @@
 <script src="resources/jquery.min.js"></script>
 <script src="resources/klcis.js"></script>
 <script src="resources/alert.js"></script>
+<!-- <script src="resources/audio-handler.js"></script> -->
 <script src="resources/bootstrap.bundle.min.js"></script>
 <script src="resources/adminlte.min.js"></script>
 
