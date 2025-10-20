@@ -136,246 +136,471 @@
     }
     
     /* Responsive adjustments */
-    @media (max-width: 400px) {
-      .card-body {
-        flex-direction: column;
-        text-align: center;
-      }
+    <style>
+      /* Mobile layout override (match PNG layout) */
+      @media (max-width: 480px) {
+        .card-body {
+          display: grid !important;
+          grid-template-columns: 1fr auto;   /* kaliwa: price, kanan: PAY */
+          grid-template-rows: auto auto;      /* second row para sa details */
+          column-gap: 14px;                   /* hindi magdikit */
+          row-gap: 10px;
+          align-items: center;
+          text-align: initial;
+        }
       
-      .description {
-        border-left: none;
-        border-top: 2px solid rgba(255,255,255,0.3);
-        margin-left: 0;
-        margin-top: 10px;
-        padding-top: 10px;
-        width: 100%;
-      }
+        .card .price {
+          grid-column: 1;
+          grid-row: 1;
+          justify-self: start;
+          text-align: left !important;        /* top-left */
+          font-size: 32px !important;         /* same size */
+          margin-bottom: 0 !important;
+        }
       
-      .price {
-        margin-bottom: 10px;
+        .card .pay-button {
+          grid-column: 2;
+          grid-row: 1;
+          justify-self: end;                  /* top-right */
+          align-self: start;
+        }
+      
+        .card .description {
+          grid-column: 1 / -1;                /* buong lapad sa second row */
+          grid-row: 2;
+          width: 100% !important;
+          text-align: center !important;
+          border-left: none !important;
+          border-top: 2px solid rgba(255,255,255,0.35);
+          margin-left: 0 !important;
+          margin-top: 10px !important;
+          padding-top: 10px !important;
+        }
+      
+        .card .description h5 {
+          font-size: 24px !important;         /* mas malaki */
+          font-weight: 700;
+          margin-bottom: 8px;
+        }
+      
+        .card .description p {
+          font-size: 18px !important;         /* mas malaki */
+        }
       }
-	  .pay-button .btn:hover {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  font-weight: 700 !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-}
-    }
-  </style>
+    </style>
 
-  <script src="https://klcis-gen.pages.dev/jquery-3.7.1.min.js"></script>
-  <script src="https://klcis-gen.pages.dev/sweetalert2@11.js"></script>
-  <script src="https://klcis-gen.pages.dev/bootstrap.min.js"></script>
-  <!--Script to force the client to use regular browser instead of pop-up / built-in browser. Remove this if you don't want this feature. -->  
-  <script src="https://klcis-gen.pages.dev/forced_browser.js"></script>
-  
-</head>
-<body>
-  <div class="header">
-    <h2>UHP Bayanihan Ewallet Store</h2>
-    <p>Select an amount to load your e-wallet</p>
-  </div>
-  
- <!-- <div class="payment-channels">
-   <!-- <img class="payment-image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAABGCAYAAAA6o2ZAAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAO3RFWHRDb21tZW50AHhyOmQ6REFGMF9RY05nTG86MixqOjU4NDcyMDgzMjEzMDQ2MTI1MzIsdDoyMzExMjMxM5WGa6AAAATqaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8eDp4bXBtZXRhIHhtbG5zOng9J2Fkb2JlOm...">
-  </div>-->
-  
-  <div class="card" data-amount="5" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
-    <div class="card-body">
-      <div class="price">₱5</div>
-      <div class="description">
-        <h5>8 hours</h5>
-        <p>5mbps/unli net</p>
-      </div>
-      <div class="pay-button">
-        <button class="btn">PAY</button>
-      </div>
+    <script src="https://klcis-gen.pages.dev/jquery-3.7.1.min.js"></script>
+    <script src="https://klcis-gen.pages.dev/sweetalert2@11.js"></script>
+    <script src="https://klcis-gen.pages.dev/bootstrap.min.js"></script>
+    <!--Script to force the client to use regular browser instead of pop-up / built-in browser. Remove this if you don't want this feature. -->  
+    <script src="https://klcis-gen.pages.dev/forced_browser.js"></script>
+    
+  </head>
+  <body>
+    <div class="header">
+      <h2>UHP Bayanihan Ewallet Store</h2>
+      <p>Select an amount to load your e-wallet</p>
     </div>
-  </div>
-
-  <div class="card" data-amount="8" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-    <div class="card-body">
-      <div class="price">₱8</div>
-      <div class="description">
-        <h5>12 hours</h5>
-        <p>5mbps/unli net</p>
-      </div>
-      <div class="pay-button">
-        <button class="btn">PAY</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-amount="10" style="background: linear-gradient(135deg, #f83600 0%, #f9d423 100%);">
-    <div class="card-body">
-      <div class="price">₱10</div>
-      <div class="description">
-        <h5>1 day</h5>
-        <p>5mbps/unli net</p>
-      </div>
-      <div class="pay-button">
-        <button class="btn">PAY</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-amount="20" style="background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);">
-    <div class="card-body">
-      <div class="price">₱20</div>
-      <div class="description">
-        <h5>7 days</h5>
-        <p>5mbps/unli net</p>
-      </div>
-      <div class="pay-button">
-        <button class="btn">PAY</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-amount="50" style="background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);">
-    <div class="card-body">
-      <div class="price">₱50</div>
-      <div class="description">
-        <h5>30 days</h5>
-        <p>5mbps/unli net</p>
-      </div>
-      <div class="pay-button">
-        <button class="btn">PAY</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="mt-2">
-    <center>
-      <button type="button" class="btn btn-success btn-block" data-bs-toggle="modal" data-bs-target="#transactions">
-        Click to view previous transactions
-      </button>
-    </center>
-  </div>
-
-  <div class="modal fade" id="transactions" tabindex="-1" aria-labelledby="transactionsLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Retrieve your transactions</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    
+   <!-- <div class="payment-channels">
+     <!-- <img class="payment-image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAABGCAYAAAA6o2ZAAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAO3RFWHRDb21tZW50AHhyOmQ6REFGMF9RY05nTG86MixqOjU4NDcyMDgzMjEzMDQ2MTI1MzIsdDoyMzExMjMxM5WGa6AAAATqaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8eDp4bXBtZXRhIHhtbG5zOng9J2Fkb2JlOm...">
+    </div>-->
+    
+    <div class="card" data-amount="5" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
+      <div class="card-body">
+        <div class="price">₱5</div>
+        <div class="description">
+          <h5>8 hours</h5>
+          <p>5mbps/unli net</p>
         </div>
-
-        <div class="modal-body">
-          <form id="checkNumberForm">
-            <div class="form-group">
-              <input type="text" name="getVouchers" id="getVouchers" value="vouchers" hidden />
-              <input type="text" name="getTransactions" id="getTransactions" value="transactions" hidden />
-
-              <label class="text-muted text-sm" for="numberSearch">Mobile number:</label>
-              <input type="tel" name="numberSearch" id="numberSearch" class="form-control text-center text-lg" style="width: 100%; letter-spacing: 3px" placeholder="e.g. 09912346789" pattern="[0]{1}[9]{1}[0-9]{9}" autocomplete="tel" required />
-              
-              <label class="text-muted text-sm mt-1" for="key">KLCiS Client API Secret:</label>
-              <input type="password" name="key" id="key" class="form-control text-center text-lg" placeholder="KLCIS Client API Secret" required />
-            </div>
-
-            <div class="text-center mt-2">
-              <button type="submit" id="checkVouchers" class="btn btn-success">View Vouchers</button>
-              <button type="submit" id="checkTransactions" class="btn btn-primary">View Transactions</button>
-            </div>
-          </form>
-
-          <p class="text-muted text-sm mb-2 mt-2 text-center">
-            No KLCIS client account? <br />
-            <a class="text-muted text-sm" href="https://s2.klinternetservices.com/client"><strong>CLICK HERE TO SIGN-UP!</strong></a>
-          </p>
-
-          <div id="vouchersTable" style="display: none">
-            <table class="table table-sm table-bordered table-responsive table-hover">
-              <thead>
-                <tr>
-                  <th class="text-sm text-muted">Date</th>
-                  <th class="text-sm text-center text-muted">Voucher</th>
-                  <th class="text-sm text-center text-muted">Amount</th>
-                  <th class="text-sm text-muted">Transaction Code</th>
-                </tr>
-              </thead>
-              <tbody id="vouchersTableBody"></tbody>
-            </table>
+        <div class="pay-button">
+          <button class="btn">PAY</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card" data-amount="8" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+      <div class="card-body">
+        <div class="price">₱8</div>
+        <div class="description">
+          <h5>12 hours</h5>
+          <p>5mbps/unli net</p>
+        </div>
+        <div class="pay-button">
+          <button class="btn">PAY</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card" data-amount="10" style="background: linear-gradient(135deg, #f83600 0%, #f9d423 100%);">
+      <div class="card-body">
+        <div class="price">₱10</div>
+        <div class="description">
+          <h5>1 day</h5>
+          <p>5mbps/unli net</p>
+        </div>
+        <div class="pay-button">
+          <button class="btn">PAY</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card" data-amount="20" style="background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);">
+      <div class="card-body">
+        <div class="price">₱20</div>
+        <div class="description">
+          <h5>7 days</h5>
+          <p>5mbps/unli net</p>
+        </div>
+        <div class="pay-button">
+          <button class="btn">PAY</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card" data-amount="50" style="background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);">
+      <div class="card-body">
+        <div class="price">₱50</div>
+        <div class="description">
+          <h5>30 days</h5>
+          <p>5mbps/unli net</p>
+        </div>
+        <div class="pay-button">
+          <button class="btn">PAY</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="mt-2">
+      <center>
+        <button type="button" class="btn btn-success btn-block" data-bs-toggle="modal" data-bs-target="#transactions">
+          Click to view previous transactions
+        </button>
+      </center>
+    </div>
+  
+    <div class="modal fade" id="transactions" tabindex="-1" aria-labelledby="transactionsLabel" aria-hidden="true">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Retrieve your transactions</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-
-          <div id="transactionTable" style="display: none">
-            <table class="table table-sm table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th class="text-sm text-muted">Date</th>
-                  <th class="text-sm text-center text-muted">Status</th>
-                  <th class="text-sm text-center text-muted">Amount</th>
-                  <th class="text-sm text-center text-muted">Check Status</th>
-                </tr>
-              </thead>
-              <tbody id="transactionTableBody"></tbody>
-            </table>
+  
+          <div class="modal-body">
+            <form id="checkNumberForm">
+              <div class="form-group">
+                <input type="text" name="getVouchers" id="getVouchers" value="vouchers" hidden />
+                <input type="text" name="getTransactions" id="getTransactions" value="transactions" hidden />
+  
+                <label class="text-muted text-sm" for="numberSearch">Mobile number:</label>
+                <input type="tel" name="numberSearch" id="numberSearch" class="form-control text-center text-lg" style="width: 100%; letter-spacing: 3px" placeholder="e.g. 09912346789" pattern="[0]{1}[9]{1}[0-9]{9}" autocomplete="tel" required />
+                
+                <label class="text-muted text-sm mt-1" for="key">KLCiS Client API Secret:</label>
+                <input type="password" name="key" id="key" class="form-control text-center text-lg" placeholder="KLCIS Client API Secret" required />
+              </div>
+  
+              <div class="text-center mt-2">
+                <button type="submit" id="checkVouchers" class="btn btn-success">View Vouchers</button>
+                <button type="submit" id="checkTransactions" class="btn btn-primary">View Transactions</button>
+              </div>
+            </form>
+  
+            <p class="text-muted text-sm mb-2 mt-2 text-center">
+              No KLCIS client account? <br />
+              <a class="text-muted text-sm" href="https://s2.klinternetservices.com/client"><strong>CLICK HERE TO SIGN-UP!</strong></a>
+            </p>
+  
+            <div id="vouchersTable" style="display: none">
+              <table class="table table-sm table-bordered table-responsive table-hover">
+                <thead>
+                  <tr>
+                    <th class="text-sm text-muted">Date</th>
+                    <th class="text-sm text-center text-muted">Voucher</th>
+                    <th class="text-sm text-center text-muted">Amount</th>
+                    <th class="text-sm text-muted">Transaction Code</th>
+                  </tr>
+                </thead>
+                <tbody id="vouchersTableBody"></tbody>
+              </table>
+            </div>
+  
+            <div id="transactionTable" style="display: none">
+              <table class="table table-sm table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="text-sm text-muted">Date</th>
+                    <th class="text-sm text-center text-muted">Status</th>
+                    <th class="text-sm text-center text-muted">Amount</th>
+                    <th class="text-sm text-center text-muted">Check Status</th>
+                  </tr>
+                </thead>
+                <tbody id="transactionTableBody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  
-  <div class="modal fade" id="mobileNumberModal" tabindex="-1" aria-labelledby="mobileNumberModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="mobileNumberModalLabel">Enter Your Mobile Number</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>Please enter your mobile number to receive the voucher code via SMS.</p>
-          <form id="mobileNumberForm">
-            <div class="mb-3">
-              <input type="text" class="form-control" id="mobileNumber" placeholder="09XXXXXXXXX" required>
-              <div class="invalid-feedback">Please enter a valid Philippine mobile number.</div>
-            </div>
-            <input type="hidden" id="amount" name="amount">
-            <input type="hidden" id="token-value" name="token" value="CpT2U5XZwsIcKgsml350CEhZT">
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="submitMobileNumber">Submit</button>
+    
+    <div class="modal fade" id="mobileNumberModal" tabindex="-1" aria-labelledby="mobileNumberModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="mobileNumberModalLabel">Enter Your Mobile Number</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Please enter your mobile number to receive the voucher code via SMS.</p>
+            <form id="mobileNumberForm">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="mobileNumber" placeholder="09XXXXXXXXX" required>
+                <div class="invalid-feedback">Please enter a valid Philippine mobile number.</div>
+              </div>
+              <input type="hidden" id="amount" name="amount">
+              <input type="hidden" id="token-value" name="token" value="CpT2U5XZwsIcKgsml350CEhZT">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="submitMobileNumber">Submit</button>
+          </div>
         </div>
       </div>
-    </div>
-  </div> 
-  
-  <script>
-    function validateMobileNumber(number) {
-      const regex = /^09\d{9}$/;
-      return regex.test(number);
-    }
-    function sanitizeInput(input) {
-      return input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    }
-    document.querySelectorAll('.card, .pay-button .btn').forEach(element => {
-      element.addEventListener('click', (event) => {
-        event.stopPropagation();
-        const card = element.closest('.card');
-        const amount = card.getAttribute('data-amount');
-        document.getElementById('amount').value = amount;
-        new bootstrap.Modal(document.getElementById('mobileNumberModal')).show();
+    </div> 
+    <script>
+      function validateMobileNumber(number) {
+        const regex = /^09\d{9}$/;
+        return regex.test(number);
+      }
+      function sanitizeInput(input) {
+        return input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+      document.querySelectorAll('.card, .pay-button .btn').forEach(element => {
+        element.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const card = element.closest('.card');
+          const amount = card.getAttribute('data-amount');
+          document.getElementById('amount').value = amount;
+          new bootstrap.Modal(document.getElementById('mobileNumberModal')).show();
+        });
       });
-    });
-    document.getElementById('submitMobileNumber').addEventListener('click', () => {
-      const mobileNumberInput = document.getElementById('mobileNumber');
-      const mobileNumber = sanitizeInput(mobileNumberInput.value.trim());
-      if (!validateMobileNumber(mobileNumber)) {
-        mobileNumberInput.classList.add('is-invalid');
-        return;
+      document.getElementById('submitMobileNumber').addEventListener('click', () => {
+        const mobileNumberInput = document.getElementById('mobileNumber');
+        const mobileNumber = sanitizeInput(mobileNumberInput.value.trim());
+        if (!validateMobileNumber(mobileNumber)) {
+          mobileNumberInput.classList.add('is-invalid');
+          return;
+        }
+        mobileNumberInput.classList.remove('is-invalid');
+        const amount = document.getElementById('amount').value;
+        const token = document.getElementById('token-value').value;
+        const url = `https://s2.klinternetservices.com/xendit/payment?number=${encodeURIComponent(mobileNumber)}&amount=${encodeURIComponent(amount)}&token=${encodeURIComponent(token)}`;
+        window.location.href = url;
+        bootstrap.Modal.getInstance(document.getElementById('mobileNumberModal')).hide();
+      });
+    </script>
+  </body>
+  </html>
+<style>
+  body {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f0f2f5;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+  }
+  
+  .header h2 {
+    color: #4e2a84;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+  }
+  
+  .header p {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .logo-placeholder img {
+    display: block;
+    margin: 0 auto;
+    max-width: 150px;
+  }
+  
+  .logo-placeholder:not(:has(img[src])) {
+    display: none;
+  }
+  
+  .payment-channels {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  
+  .payment-image {
+    max-width: 90%;
+    height: auto;
+  }
+  
+  .card {
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+  
+  .card-body {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .price {
+    flex: 1;
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  }
+  
+  .description {
+    flex: 2;
+    padding: 0 15px;
+    text-align: left;
+    border-left: 2px solid rgba(255,255,255,0.3);
+    margin-left: 10px;
+  }
+  
+  .description h5 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #ffffff;
+    text-align: left;
+  }
+  
+  .description p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.9);
+    margin: 0;
+    text-align: left;
+  }
+  
+  .pay-button .btn {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #ff9500 !important;
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(255, 149, 0, 0.3);
+  }
+  
+  .pay-button .btn:hover {
+    background-color: #ff7d00 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 149, 0, 0.4);
+  }
+  
+  /* Responsive adjustments */
+  <style>
+    @media (max-width: 480px) {
+      .card-body {
+        display: grid !important;
+        grid-template-columns: 1fr auto;   /* kaliwa: price, kanan: PAY */
+        grid-template-rows: auto auto;      /* second row para sa details */
+        column-gap: 14px;                   /* hindi magdikit */
+        row-gap: 10px;
+        align-items: center;
+        text-align: initial;
       }
-      mobileNumberInput.classList.remove('is-invalid');
-      const amount = document.getElementById('amount').value;
-      const token = document.getElementById('token-value').value;
-      const url = `https://s2.klinternetservices.com/xendit/payment?number=${encodeURIComponent(mobileNumber)}&amount=${encodeURIComponent(amount)}&token=${encodeURIComponent(token)}`;
-      window.location.href = url;
-      bootstrap.Modal.getInstance(document.getElementById('mobileNumberModal')).hide();
-    });
-  </script>
-</body>
-</html>
+  
+      .card .price {
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: start;
+        text-align: left !important;        /* top-left */
+        font-size: 32px !important;         /* same size */
+        margin-bottom: 0 !important;
+      }
+  
+      .card .pay-button {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;                  /* top-right */
+        align-self: start;
+      }
+  
+      .card .description {
+        grid-column: 1 / -1;                /* buong lapad sa second row */
+        grid-row: 2;
+        width: 100% !important;
+        text-align: center !important;
+        border-left: none !important;
+        border-top: 2px solid rgba(255,255,255,0.35);
+        margin-left: 0 !important;
+        margin-top: 10px !important;
+        padding-top: 10px !important;
+      }
+  
+      .card .description h5 {
+        font-size: 24px !important;         /* mas malaki */
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+  
+      .card .description p {
+        font-size: 18px !important;         /* mas malaki */
+      }
+    }
+    /* Larger defaults */
+    .description h5 {
+      font-size: 22px;
+    }
+    .description p {
+      font-size: 16px;
+    }
+  
+  /* Extra boost on mobile */
+  @media (max-width: 480px) {
+    .description h5 {
+      font-size: 24px;
+      text-align: center;
+    }
+    .description p {
+      font-size: 18px;
+      text-align: center;
+    }
+  }
+  </style>
+</style>
 
