@@ -61,6 +61,40 @@
       max-width: 90%;
       height: auto;
     }
+
+    /* Price image card with transparent hotspots */
+    .price-card {
+      position: relative;
+      width: 100%;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      background: #ffffff;
+    }
+    .price-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .hotspot {
+      position: absolute;
+      width: 50%;
+      left: 6%;
+      height: 8%;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hotspot:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    }
+    .price-5  { top: 38%; }
+    .price-8  { top: 49.8%; }
+    .price-10 { top: 62.0%; }
+    .price-20 { top: 73.4%; }
+    .price-50 { top: 84.8%; }
     
     .card {
       margin-bottom: 15px;
@@ -201,76 +235,22 @@
       <h2>UHP Bayanihan Ewallet Store</h2>
       <p>Select an amount to load your e-wallet</p>
     </div>
+
+    <!-- Price list image with transparent hotspots -->
+    <div class="price-card">
+      <img src="price.png" alt="Prices">
+      <div class="hotspot price-5"  data-amount="5"></div>
+      <div class="hotspot price-8"  data-amount="8"></div>
+      <div class="hotspot price-10" data-amount="10"></div>
+      <div class="hotspot price-20" data-amount="20"></div>
+      <div class="hotspot price-50" data-amount="50"></div>
+    </div>
     
    <!-- <div class="payment-channels">
      <!-- <img class="payment-image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAABGCAYAAAA6o2ZAAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAO3RFWHRDb21tZW50AHhyOmQ6REFGMF9RY05nTG86MixqOjU4NDcyMDgzMjEzMDQ2MTI1MzIsdDoyMzExMjMxM5WGa6AAAATqaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8eDp4bXBtZXRhIHhtbG5zOng9J2Fkb2JlOm...">
     </div>-->
     
-    <div class="card" data-amount="5" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
-      <div class="card-body">
-        <div class="price">₱5</div>
-        <div class="description">
-          <h5>8 hours</h5>
-          <p>5mbps/unli net</p>
-        </div>
-        <div class="pay-button">
-          <button class="btn">PAY</button>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card" data-amount="8" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-      <div class="card-body">
-        <div class="price">₱8</div>
-        <div class="description">
-          <h5>12 hours</h5>
-          <p>5mbps/unli net</p>
-        </div>
-        <div class="pay-button">
-          <button class="btn">PAY</button>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card" data-amount="10" style="background: linear-gradient(135deg, #f83600 0%, #f9d423 100%);">
-      <div class="card-body">
-        <div class="price">₱10</div>
-        <div class="description">
-          <h5>1 day</h5>
-          <p>5mbps/unli net</p>
-        </div>
-        <div class="pay-button">
-          <button class="btn">PAY</button>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card" data-amount="20" style="background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);">
-      <div class="card-body">
-        <div class="price">₱20</div>
-        <div class="description">
-          <h5>7 days</h5>
-          <p>5mbps/unli net</p>
-        </div>
-        <div class="pay-button">
-          <button class="btn">PAY</button>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card" data-amount="50" style="background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);">
-      <div class="card-body">
-        <div class="price">₱50</div>
-        <div class="description">
-          <h5>30 days</h5>
-          <p>5mbps/unli net</p>
-        </div>
-        <div class="pay-button">
-          <button class="btn">PAY</button>
-        </div>
-      </div>
-    </div>
-  
+
     <div class="mt-2">
       <center>
         <button type="button" class="btn btn-success btn-block" data-bs-toggle="modal" data-bs-target="#transactions">
@@ -376,12 +356,27 @@
       function sanitizeInput(input) {
         return input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
       }
-      document.querySelectorAll('.card, .pay-button .btn').forEach(element => {
+      document.querySelectorAll('.card, .pay-button .btn, .hotspot').forEach(element => {
         element.addEventListener('click', (event) => {
           event.stopPropagation();
+          let amount = null;
           const card = element.closest('.card');
-          const amount = card.getAttribute('data-amount');
+          if (card) {
+            amount = card.getAttribute('data-amount');
+          }
+          if (!amount) {
+            amount = element.getAttribute('data-amount');
+          }
+          if (!amount) return;
           document.getElementById('amount').value = amount;
+          const labelEl = document.getElementById('mobileNumberModalLabel');
+          if (labelEl) {
+            labelEl.innerText = `Buy ₱${amount} from DOLLYANA`;
+          }
+          const confirmAmountEl = document.getElementById('confirmAmount');
+          if (confirmAmountEl) {
+            confirmAmountEl.innerText = `₱${amount}`;
+          }
           new bootstrap.Modal(document.getElementById('mobileNumberModal')).show();
         });
       });
@@ -603,4 +598,5 @@
   }
   </style>
 </style>
+
 
